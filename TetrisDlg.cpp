@@ -81,7 +81,7 @@ void CTetrisDlg::drawMainScreen() {
 		for (int j = 0; j < width; j++) {
 			int iType = screen[i][j];
 
-			if (iType > 0) {
+			if (iType > 0 && iType < 8) {
 				CClientDC dcc(wnd);
 				CBrush brush(colorTableA[iType - 1]);
 				dcc.FillRect(
@@ -91,7 +91,8 @@ void CTetrisDlg::drawMainScreen() {
 						(j + 1) * widthSize,
 						(i + 1) * heightSize),
 					&brush);
-
+			}
+			if (iType > 0) { // when iType equals 8, draw a hollow rectangle to indicate the position of block falling down
 				CBrush* pBrush = CBrush::FromHandle((HBRUSH)
 					GetStockObject(NULL_BRUSH));
 				CBrush* pOldBrush = dc.SelectObject(pBrush);

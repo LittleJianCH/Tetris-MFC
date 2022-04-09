@@ -33,7 +33,8 @@ public:
 	int getLocY() const;
 	int getBlock(int x, int y) const;
 	const Tetromino& getTetromino() const;
-	const Tetromino& getNextTetromino() const;
+	const Tetromino& getNextTetromino() const; 
+	std::pair<int, int> Game::getFallingDownPostion() const;
 	std::vector<std::vector<int>> getCurrentScreen() const;
 	void start();
 	void fixTetromino();
@@ -43,7 +44,7 @@ public:
 
 private:
 	void newTetromino();
-	bool checkCollision(int x, int y, Tetromino& tetromino);
+	bool checkCollision(int x, int y, const Tetromino& tetromino) const;
 	bool moveWithDirection(int dx, int dy);
 	bool moveDown();
 	bool moveLeft();

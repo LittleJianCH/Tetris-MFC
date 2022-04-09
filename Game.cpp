@@ -25,6 +25,17 @@ const Tetromino& Game::getNextTetromino() const {
 	return _nextTetromino;
 }
 
+std::pair<int, int> Game::getFallingDownPostion() const {
+	int x = _tLocX;
+	int y = _tLocY;
+
+	while (!checkCollision(x, y + 1, _tetromino)) {
+		y++;
+	}
+
+	return std::make_pair(x, y);
+}
+
 void Game::start() {
 	srand(static_cast<int>(time(0)));
 
@@ -34,7 +45,7 @@ void Game::start() {
 	newTetromino();
 }
 
-bool Game::checkCollision(int x, int y, Tetromino& tetromino) {
+bool Game::checkCollision(int x, int y, const Tetromino& tetromino) const {
 	// check if the tetromino is out of the field 
 	// or collide with other tetromino
 	for (int i = 0; i < 4; i++) {
@@ -104,10 +115,24 @@ void Game::fixTetromino() {
 std::vector<std::vector<int>> Game::getCurrentScreen() const {
 	std::vector<std::vector<int>> screen{ _field };
 
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			if (_tetromino.getBlock(i, j) == 1) {
-				screen[_tLocY + j][_tLocX + i] = _tetromino.getType();
+	if (_tetromino.getType() != 0) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (_tetromino.getBlock(i, j) == 1) {
+					screen[_tLocY + j][_tLocX + i] = _tetromino.getType();
+				}
+			}
+		}
+
+		auto pair = getFallingDownPostion();
+
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				int x = i + pair.first;
+				int y = j + pair.second;
+				if (_tetromino.getBlock(i, j) == 1 && screen[y][x] == 0) {
+					screen[y][x] = 8;
+				}
 			}
 		}
 	}
