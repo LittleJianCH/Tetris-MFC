@@ -252,7 +252,7 @@ void CTetrisDlg::OnPaint() {
 		BITMAP bitmap;
 		bmpBackground.GetBitmap(&bitmap);
 
-		CBitmap* pbmOld = dcMem.SelectObject(&bmpBackground);
+		CBitmap* bmpOld = dcMem.SelectObject(&bmpBackground);
 
 		dc.StretchBlt(0, 0, rect.Width(), rect.Height(), &dcMem,
 			0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);

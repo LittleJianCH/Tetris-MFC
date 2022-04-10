@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Game.h"
 
-const int Game::cnt2Score[] = { 0, 100, 150, 300, 600 };
+const int Game::cnt2Score[] = { 0, 100, 250, 400, 800 };
 
 Game::Game(int width, int height) :
 	_width(width), _height(height), _score(0),
