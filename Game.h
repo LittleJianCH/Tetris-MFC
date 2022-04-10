@@ -12,6 +12,7 @@ enum class GAME_STATE {
 
 class Game {
 private:
+	static const int cnt2Score[5];
 	std::vector<std::vector<int>> _field;
 
 	Tetromino _tetromino;
@@ -22,6 +23,8 @@ private:
 	int _tLocX;
 	int _tLocY;
 
+	int _score;
+
 	GAME_STATE _state;
 
 public:
@@ -31,6 +34,7 @@ public:
 	int getWidth() const;
 	int getLocX() const;
 	int getLocY() const;
+	int getScore() const;
 	int getBlock(int x, int y) const;
 	const Tetromino& getTetromino() const;
 	const Tetromino& getNextTetromino() const; 

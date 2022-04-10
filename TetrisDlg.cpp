@@ -170,6 +170,7 @@ BEGIN_MESSAGE_MAP(CTetrisDlg, CDialogEx)
 	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_BUTTON_STOP, &CTetrisDlg::OnClickedButtonStop)
 	ON_WM_CLOSE()
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -292,6 +293,12 @@ void CTetrisDlg::OnTimer(UINT_PTR nIDEvent) {
 		TCHAR* msg = _T("GAME OVER");
 		MessageBox(msg);
 	}
+	else {
+		// show the game score
+		CString str;
+		str.Format(_T("Score: %d"), _game.getScore());
+		GetDlgItem(IDC_STATIC_SCORE)->SetWindowText(str);
+	}
 
 	Invalidate(true);
 }
@@ -325,4 +332,16 @@ BOOL CTetrisDlg::PreTranslateMessage(MSG* pMsg) {
 	}
 
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+HBRUSH CTetrisDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) {
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+	
+	if (pWnd->GetDlgCtrlID() == IDC_STATIC_SCORE) {
+		pDC->SetBkMode(TRANSPARENT);
+		return (HBRUSH)GetStockObject(NULL_BRUSH);
+	}
+	
+	return hbr;
 }

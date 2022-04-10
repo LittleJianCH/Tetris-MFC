@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "Game.h"
 
+const int Game::cnt2Score[] = { 0, 100, 150, 300, 600 };
+
 Game::Game(int width, int height) :
-	_width(width), _height(height),
+	_width(width), _height(height), _score(0),
 	_tLocX(0), _tLocY(0),
 	_tetromino(0), _nextTetromino(0),
 	_state(GAME_STATE::STOP),
@@ -142,10 +144,12 @@ std::vector<std::vector<int>> Game::getCurrentScreen() const {
 
 void Game::removeLines() {
 	std::vector<bool> mark;
+	int cnt = 0;
 
 	for (auto& line : _field) {
 		if (std::all_of(line.begin(), line.end(), [](int i) {return i != 0; })) {
 			line = std::vector<int>(_width, 0);
+			cnt++;
 		}
 	}
 
@@ -176,6 +180,8 @@ void Game::removeLines() {
 	for (; it2 >= 0; it2--) {
 		_field[it2] = std::vector<int>(_width, 0);
 	}
+
+	_score += cnt2Score[cnt];
 }
 
 void Game::input(UINT key) {
@@ -234,6 +240,10 @@ int Game::getLocX() const {
 
 int Game::getLocY() const {
 	return _tLocY;
+}
+
+int Game::getScore() const {
+	return _score;
 }
 
 int Game::getBlock(int x, int y) const {
