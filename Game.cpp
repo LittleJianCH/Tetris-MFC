@@ -41,7 +41,10 @@ std::pair<int, int> Game::getFallingDownPostion() const {
 void Game::start() {
 	srand(static_cast<int>(time(0)));
 
+	_score = 0;
 	_state = GAME_STATE::GO;
+	
+	std::fill(_field.begin(), _field.end(), std::vector<int>(_width, 0));
 
 	newTetromino();
 	newTetromino();
