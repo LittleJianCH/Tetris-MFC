@@ -283,7 +283,7 @@ void CTetrisDlg::OnClickedButtonStart() {
 	}
 
 	_game.start();
-	SetTimer(1, 500, NULL);
+	SetTimer(1, _game.getSpeed(), NULL);
 }
 
 
@@ -311,7 +311,7 @@ void CTetrisDlg::OnClickedButtonStop() {
 		KillTimer(1);
 	}
 	else {
-		SetTimer(1, 500, NULL);
+		SetTimer(1, _game.getSpeed(), NULL);
 	}
 }
 

@@ -35,6 +35,7 @@ public:
 	int getLocX() const;
 	int getLocY() const;
 	int getScore() const;
+	int getSpeed() const; // return the time of time interval
 	int getBlock(int x, int y) const;
 	const Tetromino& getTetromino() const;
 	const Tetromino& getNextTetromino() const; 

@@ -249,6 +249,15 @@ int Game::getScore() const {
 	return _score;
 }
 
+int Game::getSpeed() const {
+	if (_score <= 300) return 500;
+	if (_score <= 700) return 400;
+	if (_score <= 1000) return 300;
+	if (_score <= 1500) return 210;
+	if (_score <= 2000) return 100;
+	return 50;
+}
+
 int Game::getBlock(int x, int y) const {
 	return _field[x][y];
 }
