@@ -22,6 +22,9 @@ protected:
 
 private:
 	Game _game;
+	CDC _dcMem;
+	CBitmap _bmpBackground;
+	bool _bFirst;
 	void drawMainScreen();
 	void drawPreviewScreen();
 	void onKeyDown(UINT nChar);

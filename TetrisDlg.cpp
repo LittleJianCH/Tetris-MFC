@@ -47,7 +47,7 @@ END_MESSAGE_MAP()
 
 
 CTetrisDlg::CTetrisDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_TETRIS_DIALOG, pParent), _game(20, 35) {
+	: CDialogEx(IDD_TETRIS_DIALOG, pParent), _game(20, 35), _bFirst(true) {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
@@ -242,19 +242,21 @@ void CTetrisDlg::OnPaint() {
 		CPaintDC dc(this);
 		CRect rect;
 		GetClientRect(&rect);
-		CDC dcMem;
 
-		dcMem.CreateCompatibleDC(&dc);
-		CBitmap bmpBackground;
-
-		bmpBackground.LoadBitmap(IDB_BITMAP_BACKGROUND);
+		if (_bFirst) {
+			_dcMem.CreateCompatibleDC(&dc);
+			
+			_bmpBackground.LoadBitmapW(IDB_BITMAP_BACKGROUND);
+			
+			_bFirst = false;
+		}
 
 		BITMAP bitmap;
-		bmpBackground.GetBitmap(&bitmap);
+		_bmpBackground.GetBitmap(&bitmap);
 
-		CBitmap* bmpOld = dcMem.SelectObject(&bmpBackground);
+		_dcMem.SelectObject(&_bmpBackground);
 
-		dc.StretchBlt(0, 0, rect.Width(), rect.Height(), &dcMem,
+		dc.StretchBlt(0, 0, rect.Width(), rect.Height(), &_dcMem,
 			0, 0, bitmap.bmWidth, bitmap.bmHeight, SRCCOPY);
 
 		drawMainScreen();
